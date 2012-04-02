@@ -16,7 +16,7 @@ import org.openshapa.plugins.Filter;
 import org.openshapa.plugins.Plugin;
 
 
-public class HeartRatePlugin implements Plugin {
+public class AscensionPlugin implements Plugin {
 
     private static final Filter HR_FILTER = new Filter() {
             List<String> exts = new ArrayList<String>();
@@ -43,7 +43,7 @@ public class HeartRatePlugin implements Plugin {
     private static final Filter[] FILTERS = new Filter[] { HR_FILTER };
 
     @Override public String getClassifier() {
-        return "com.dteoh.heartrate";
+        return "ascensionplugin";
     }
 
     @Override public Filter[] getFilters() {
@@ -56,7 +56,7 @@ public class HeartRatePlugin implements Plugin {
     }
 
     @Override public String getPluginName() {
-        return "Heart Rate Plugin";
+        return "Ascension 3D Plugin";
     }
 
     @Override public ImageIcon getTypeIcon() {

@@ -5,6 +5,7 @@
 package ascensionplugin;
 
 import java.util.HashMap;
+import java.util.Vector;
 
 /**
  *
@@ -12,12 +13,19 @@ import java.util.HashMap;
  */
 public class Body {
     public HashMap<String, Marker> markers;
+    public Vector<Long> timepoints;
     
     public Body() {
         markers = new HashMap<String, Marker>();
+        timepoints = new Vector<Long>();
     }
     
-    public void addMarker(Marker m) {
+    public void addMarker(String name) {
+        Marker m = new Marker(name);
         markers.put(m.name, m);
+    }
+    
+    public int getTimeStep() {
+        return 0;
     }
 }

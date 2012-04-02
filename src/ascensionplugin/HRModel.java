@@ -34,6 +34,8 @@ public class HRModel {
     /** Handle property change propagation. */
     private PropertyChangeSupport changeSupport;
     
+    public Body body;
+    
     private final int width = 100;
 
     public HRModel(final File data) {
@@ -48,43 +50,8 @@ public class HRModel {
     }
 
     private void parseData(final File dataFile) {
-        LineIterator it = null;
-
-        try {
-            it = FileUtils.lineIterator(dataFile);
-
-            boolean firstLine = true;
-
-            while (it.hasNext()) {
-                String line = it.next();
-
-                if (firstLine) {
-
-                    // Patient name.
-                    patientName = line;
-                    firstLine = false;
-                } else {
-
-                    // Data point.
-                    String[] data = line.split(",");
-
-                    if (data.length == 2) {
-                        long timestamp = parseTimestamp(data[0]);
-                        double heartRate = parseHeartRate(data[1]);
-
-                        timestamps.add(timestamp);
-                        heartRates.add(heartRate);
-                    }
-                }
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            LineIterator.closeQuietly(it);
-        }
-
-        assert timestamps.size() == heartRates.size();
+        body = DataReader.ReadAscensionControlLog(dataFile);
+        timestamps = body.timepoints;
     }
 
     private long parseTimestamp(final String data) {
@@ -130,13 +97,13 @@ public class HRModel {
     	return rates;
     }
     
-    public double getMinValue() {
-    	return Collections.min(heartRates);
-    }
-    
-    public double getMaxValue() {
-    	return Collections.max(heartRates);
-    }
+//    public double getMinValue() {
+//    	return Collections.min(heartRates);
+//    }
+//    
+//    public double getMaxValue() {
+//    	return Collections.max(heartRates);
+//    }
 
     public long getCurrentTimestamp() {
 
@@ -192,6 +159,10 @@ public class HRModel {
         pos = 0;
         timestamps.clear();
         heartRates.clear();
+    }
+    
+    public int getCurrentPosition() {
+        return pos;
     }
 
 }

@@ -10,7 +10,14 @@ package ascensionplugin;
  */
 public class Point {
     public double x, y, z, pitch, yaw, roll, quality;
-    public Point(double time, double x, double y, double z, double pitch, double yaw, double roll, double quality) {
+    public long time;
+    public int button;
+    
+    public Point() {
+        
+    }
+    public Point(long time, double x, double y, double z, double pitch, double yaw, double roll, double quality, int button) {
+        this.time = time;
         this.x = x;
         this.y = y;
         this.z = z;
@@ -18,5 +25,6 @@ public class Point {
         this.yaw = yaw;
         this.roll = roll;
         this.quality = quality;
+        this.button = button;
     }
 }

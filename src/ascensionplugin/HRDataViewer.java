@@ -42,7 +42,7 @@ public class HRDataViewer implements DataViewer {
     private JDialog hrDialog;
 
     /** Panel for showing our visualizations. */
-    private HRPanel hrPanel;
+//    private HRPanel hrPanel;
 
     /** Data viewer offset. */
     private long offset;
@@ -89,16 +89,16 @@ public class HRDataViewer implements DataViewer {
                     sketch.init();
                     c.add(sketch, BorderLayout.CENTER);
 
-                    hrPanel = new HRPanel();
-                    c.add(hrPanel, BorderLayout.CENTER);
+//                    hrPanel = new HRPanel();
+//                    c.add(hrPanel, BorderLayout.CENTER);
 
                     hrDialog.setVisible(true);
 
-                    sampleButton = new JButton();
-                    sampleButton.setIcon(new ImageIcon(
-                            HRDataViewer.class.getResource("heart.png")));
-                    sampleButton.setBorderPainted(false);
-                    sampleButton.setContentAreaFilled(false);
+//                    sampleButton = new JButton();
+////                    sampleButton.setIcon(new ImageIcon(
+////                            HRDataViewer.class.getResource("ascension.png")));
+//                    sampleButton.setBorderPainted(false);
+//                    sampleButton.setContentAreaFilled(false);
                     
                     
                 }
@@ -120,7 +120,7 @@ public class HRDataViewer implements DataViewer {
     }
 
     @Override public float getFrameRate() {
-        return 1;
+        return ((float)model.getDuration()) / ((float)model.body.timepoints.size());
     }
 
     @Override public void setIdentifier(final Identifier id) {
@@ -151,7 +151,8 @@ public class HRDataViewer implements DataViewer {
         data = dataFeed;
         model = new HRModel(data);
 
-        hrPanel.setModel(model);
+        sketch.setModel(model);
+//        hrPanel.setModel(model);
 
         SwingUtilities.invokeLater(new Runnable() {
                 @Override public void run() {
@@ -266,7 +267,8 @@ public class HRDataViewer implements DataViewer {
 
     @Override public void clearDataFeed() {
         stop();
-        hrPanel.removeModel();
+//        hrPanel.removeModel();
+        sketch.removeModel();
         model.clearData();
         model = null;
     }

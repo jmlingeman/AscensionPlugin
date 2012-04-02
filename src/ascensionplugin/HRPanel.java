@@ -237,8 +237,8 @@ public class HRPanel extends JPanel {
 
     private void updateFromModel() {
         double heartRate = model.getCurrentHeartRate();
-        maxValue = model.getMaxValue();
-        minValue = model.getMinValue();
+//        maxValue = model.getMaxValue();
+//        minValue = model.getMinValue();
         heartRateWindow = model.getCurrentHeartRateWindow(zoomLevel);
 
         Formatter rateFormatter = new Formatter();
