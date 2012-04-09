@@ -29,7 +29,7 @@ public class HRModel {
     private List<Double> heartRates;
 
     /** Current position in our data structures. */
-    private int pos;
+    private int pos = 0;
 
     /** Handle property change propagation. */
     private PropertyChangeSupport changeSupport;

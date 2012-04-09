@@ -11,7 +11,7 @@ import peasy.*;
 
 public class Sketch extends PApplet {
     
-    private HRModel model;
+    private HRModel model = null;
     private PropertyChangeListener positionListener;
     private int pos = 0;
 
@@ -33,20 +33,20 @@ public class Sketch extends PApplet {
     public void setup() {
         System.out.println(System.getProperties());
 //        size(screen.height*4/3/2, screen.height/2, OPENGL); //Keep 4/3 aspect ratio, since it matches the kinect's.
-        size(w, h, P3D);
-//        hint(ENABLE_OPENGL_4X_SMOOTH);
+        size(w, h, OPENGL);
+        hint(ENABLE_OPENGL_4X_SMOOTH);
         noStroke();
         
         cam = new PeasyCam(this, 100);
         cam.setMinimumDistance(50);
         cam.setMaximumDistance(500);
         
-        positionListener = new PropertyChangeListener() {
-                @Override public void propertyChange(
-                    final PropertyChangeEvent evt) {
-                    updateFromModel();
-                }
-            };
+//        positionListener = new PropertyChangeListener() {
+//                @Override public void propertyChange(
+//                    final PropertyChangeEvent evt) {
+//                    updateFromModel();
+//                }
+//            };
     }
     
     @Override
@@ -55,7 +55,7 @@ public class Sketch extends PApplet {
         ambientLight(64, 64, 64);
         lightSpecular(255,0,0);
         directionalLight(224,224,224, (float)0.5, 1, -1);
-        
+       
         // Get the current point to display
 
 //        pushMatrix();
@@ -66,14 +66,14 @@ public class Sketch extends PApplet {
         Marker curMarker;
         Point curPoint;
         
-        if(pos >= 0 && model != null && model.body != null && model.body.markers != null) {
+        if(pos >= 0 && pos < model.body.timepoints.size() && model != null && model.body != null && model.body.markers != null) {
             for(String k : model.body.markers.keySet()) {
                 curMarker = model.body.markers.get(k);
                 curPoint = curMarker.points.get(pos);
 
                 pushMatrix();
-                translate((float)(curPoint.x / 100.0) * width, (float)(curPoint.y / 100.0) * height, -(float)(curPoint.z / 100.0));
-                sphere(6);
+                translate((float)(curPoint.x / 1000.0) * width, (float)(curPoint.y / 1000.0) * height, -(float)(curPoint.z / 1000.0));
+                sphere(2);
                 popMatrix();
             }
         }
@@ -87,12 +87,13 @@ public class Sketch extends PApplet {
 //                popMatrix();
 //            }
 //        }
+        updateFromModel();
     }
     
     public void setModel(HRModel model) {
         removeModel();
         this.model = model;
-        this.model.addPositionListener(positionListener);
+//        this.model.addPositionListener(positionListener);
     }
     
     public void removeModel() {
@@ -104,8 +105,9 @@ public class Sketch extends PApplet {
     }
     
     public void updateFromModel() {
-        pos = model.getCurrentPosition();
-        System.out.println(pos);
-        draw();
+        if(this.model != null) {
+            pos = model.getCurrentPosition();
+        }
+//        draw();
     }
 }

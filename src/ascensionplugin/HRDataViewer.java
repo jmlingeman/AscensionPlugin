@@ -75,8 +75,8 @@ public class HRDataViewer implements DataViewer {
         };
 
     public HRDataViewer(final Frame parent, final boolean modal) {
-        Runnable edtTask = new Runnable() {
-                @Override public void run() {
+//        Runnable edtTask = new Runnable() {
+//                @Override public void run() {
                     hrDialog = new JDialog(parent, modal);
                     hrDialog.setName("HRDataViewer");
                     hrDialog.setResizable(true);
@@ -86,8 +86,10 @@ public class HRDataViewer implements DataViewer {
                     c.setLayout(new BorderLayout());
                     
                     sketch = new Sketch();
-                    sketch.init();
+                    System.out.println("INITING");
                     c.add(sketch, BorderLayout.CENTER);
+                    sketch.init();
+                    
 
 //                    hrPanel = new HRPanel();
 //                    c.add(hrPanel, BorderLayout.CENTER);
@@ -101,14 +103,14 @@ public class HRDataViewer implements DataViewer {
 //                    sampleButton.setContentAreaFilled(false);
                     
                     
-                }
-            };
+//                }
+//            };
 
-        if (SwingUtilities.isEventDispatchThread()) {
-            edtTask.run();
-        } else {
-            SwingUtilities.invokeLater(edtTask);
-        }
+//        if (SwingUtilities.isEventDispatchThread()) {
+//            edtTask.run();
+//        } else {
+//            SwingUtilities.invokeLater(edtTask);
+//        }
 
         stateListeners = new ArrayList<ViewerStateListener>();
         clock = new Clock();
@@ -120,7 +122,11 @@ public class HRDataViewer implements DataViewer {
     }
 
     @Override public float getFrameRate() {
-        return ((float)model.getDuration()) / ((float)model.body.timepoints.size());
+        System.out.println("FRAMERATE:");
+        System.out.println(((float)model.getDuration()) / ((float)model.body.timepoints.size()));
+        System.out.println((float)model.getDuration());
+        System.out.println((float)model.body.timepoints.size());
+        return  ((float)model.body.timepoints.size()) / ((float)model.getDuration()/1000.0F);
     }
 
     @Override public void setIdentifier(final Identifier id) {

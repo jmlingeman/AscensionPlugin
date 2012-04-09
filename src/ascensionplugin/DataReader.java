@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  *
@@ -46,7 +47,7 @@ public class DataReader {
             long time;
             int button;
             
-            HashMap<String, Integer> headerHash = new HashMap<String, Integer>();
+            ConcurrentHashMap<String, Integer> headerHash = new ConcurrentHashMap<String, Integer>();
             
             for(int i = 0; i < header.length; i++) {
                 headerHash.put(header[i], i);
@@ -111,23 +112,23 @@ public class DataReader {
                 body.timepoints.add(p.time);
             }
             
-            // Get desired number of frames
-            long frame_rate = body.timepoints.get(body.timepoints.size() - 1) / body.timepoints.size();
-            long num_frames = frame_rate / 30L;
+       
             
-            // Now smooth to the desired framerate, 30fps by default
-            
-            for(String key : body.markers.keySet()) {
-                Marker m = body.markers.get(key);
-                Marker m_new = new Marker(key);
-                for(int i = 0; i < m.points.size(); i++) {
-                    if(i % num_frames == 0) {
-                        m_new.points.add(m.points.get(i));
-                    }
-                }
-                body.markers.remove(key);
-                body.markers.put(key, m_new);
-            }
+//            // Now smooth to the desired framerate, 30fps by default
+//            long time_count = 0;
+//            for(String key : body.markers.keySet()) {
+//                Marker m = body.markers.get(key);
+//                Marker m_new = new Marker(key);
+//                for(int i = 1; i < m.points.size(); i++) {
+//                    time_count += (m.points.get(i).time - m.points.get(i-1).time);
+//                    if(time_count > 33) {
+//                        m_new.points.add(m.points.get(i));
+//                        time_count = 0;
+//                    }
+//                }
+//                body.markers.remove(key);
+//                body.markers.put(key, m_new);
+//            }
             
             // Now collect the time points so we can read them
             for(Point p : body.markers.get("0").points) {
