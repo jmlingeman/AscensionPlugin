@@ -66,7 +66,7 @@ public class Sketch extends PApplet {
         Marker curMarker;
         Point curPoint;
         
-        if(pos >= 0 && pos < model.body.timepoints.size() && model != null && model.body != null && model.body.markers != null) {
+        if(pos >= 0  && model != null && model.body != null && model.body.markers != null && pos < model.body.timepoints.size()-1) {
             for(String k : model.body.markers.keySet()) {
                 curMarker = model.body.markers.get(k);
                 curPoint = curMarker.points.get(pos);

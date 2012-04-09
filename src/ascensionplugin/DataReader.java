@@ -112,29 +112,6 @@ public class DataReader {
                 body.timepoints.add(p.time);
             }
             
-       
-            
-//            // Now smooth to the desired framerate, 30fps by default
-//            long time_count = 0;
-//            for(String key : body.markers.keySet()) {
-//                Marker m = body.markers.get(key);
-//                Marker m_new = new Marker(key);
-//                for(int i = 1; i < m.points.size(); i++) {
-//                    time_count += (m.points.get(i).time - m.points.get(i-1).time);
-//                    if(time_count > 33) {
-//                        m_new.points.add(m.points.get(i));
-//                        time_count = 0;
-//                    }
-//                }
-//                body.markers.remove(key);
-//                body.markers.put(key, m_new);
-//            }
-            
-            // Now collect the time points so we can read them
-            for(Point p : body.markers.get("0").points) {
-                body.timepoints.add(p.time);
-            }
-            
             
             
         } catch (Exception e) {//Catch exception if any

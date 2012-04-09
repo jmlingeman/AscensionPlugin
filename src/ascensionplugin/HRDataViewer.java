@@ -122,10 +122,6 @@ public class HRDataViewer implements DataViewer {
     }
 
     @Override public float getFrameRate() {
-        System.out.println("FRAMERATE:");
-        System.out.println(((float)model.getDuration()) / ((float)model.body.timepoints.size()));
-        System.out.println((float)model.getDuration());
-        System.out.println((float)model.body.timepoints.size());
         return  ((float)model.body.timepoints.size()) / ((float)model.getDuration()/1000.0F);
     }
 
