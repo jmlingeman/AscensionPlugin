@@ -4,7 +4,6 @@
  */
 package ascensionplugin;
 
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import processing.core.*;
 import peasy.*;
@@ -28,6 +27,7 @@ public class Sketch extends PApplet {
     int w = 640;
     int h = 480;
     PeasyCam cam;
+    PFont font;
     
     @Override
     public void setup() {
@@ -40,6 +40,10 @@ public class Sketch extends PApplet {
         cam = new PeasyCam(this, 100);
         cam.setMinimumDistance(50);
         cam.setMaximumDistance(500);
+        cam.setYawRotationMode();
+        
+        font = createFont("ArialUnicodeMS", 32, true);
+
         
 //        positionListener = new PropertyChangeListener() {
 //                @Override public void propertyChange(
@@ -70,10 +74,19 @@ public class Sketch extends PApplet {
             for(String k : model.body.markers.keySet()) {
                 curMarker = model.body.markers.get(k);
                 curPoint = curMarker.points.get(pos);
+                
 
+                textFont(font, 64);
+                fill(255);
+                text(key, (float)(curPoint.x / 1000.0) * width - 3.0f, (float)(curPoint.y / 1000.0) * height - 3.0f, (float)(curPoint.z / 1000.0));
+                
                 pushMatrix();
-                translate((float)(curPoint.x / 1000.0) * width, (float)(curPoint.y / 1000.0) * height, -(float)(curPoint.z / 1000.0));
+                if(curPoint.button == 1) {
+                    fill(255,0,0);
+                }
+                translate((float)(curPoint.x / 1000.0) * width, (float)(curPoint.y / 1000.0) * height, (float)(curPoint.z / 1000.0));
                 sphere(2);
+
                 popMatrix();
             }
         }

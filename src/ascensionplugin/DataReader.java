@@ -75,7 +75,7 @@ public class DataReader {
                     if(!sptLine[headerHash.get("Sensor" + String.valueOf(i) + ".X")].equals("")) {
                         x = Double.valueOf(sptLine[headerHash.get("Sensor" + String.valueOf(i) + ".X")]);
                         y = Double.valueOf(sptLine[headerHash.get("Sensor" + String.valueOf(i) + ".Y")]);
-                        z = Double.valueOf(sptLine[headerHash.get("Sensor" + String.valueOf(i) + ".Z")]);
+                        z = -Double.valueOf(sptLine[headerHash.get("Sensor" + String.valueOf(i) + ".Z")]);
                         pitch = Double.valueOf(sptLine[headerHash.get("Sensor" + String.valueOf(i) + ".Pitch")]);
                         yaw = Double.valueOf(sptLine[headerHash.get("Sensor" + String.valueOf(i) + ".yaw")]);
                         roll = Double.valueOf(sptLine[headerHash.get("Sensor" + String.valueOf(i) + ".Roll")]);
@@ -119,8 +119,60 @@ public class DataReader {
         }
         
         
-        
+        body = fixHemisphereFlips(body);
         
         return body;
     }
+    
+    public static Body fixHemisphereFlips(Body body) {
+        double thresh = 3.0;
+        for(String key : body.markers.keySet()) {
+            Marker marker = body.markers.get(key);
+            for(int i = 1; i < marker.points.size(); i++) {
+                Point cp = marker.points.get(i);
+                Point pp = marker.points.get(i-1);
+                
+                // Check for a X flip
+                if(sign(cp.x) != sign(pp.x) && Math.abs(cp.x - pp.x) > thresh ) {
+                    cp.x = -cp.x;
+                }
+                
+                // Check for a Y flip
+                if(sign(cp.y) != sign(pp.y) && Math.abs(cp.y - pp.y) > thresh ) {
+                    cp.y = -cp.y;
+                }
+                
+                // Check for a Z flip
+                if(sign(cp.z) != sign(pp.z) && Math.abs(cp.z - pp.z) > thresh ) {
+                    cp.z = -cp.z;
+                }
+                
+                
+            }
+        }
+        
+        return body;
+    }
+    
+    int sign(int i) {
+        if (i == 0) return 0;
+        if (i >> 31 != 0) return -1;
+        return +1;
+    }
+    int sign(long i) {
+        if (i == 0) return 0;
+        if (i >> 63 != 0) return -1;
+        return +1;
+    }
+    public static int sign(double f) {
+        if (f != f) throw new IllegalArgumentException("NaN");
+        if (f == 0) return 0;
+        f *= Double.POSITIVE_INFINITY;
+        if (f == Double.POSITIVE_INFINITY) return +1;
+        if (f == Double.NEGATIVE_INFINITY) return -1;
+
+        //this should never be reached, but I've been wrong before...
+        throw new IllegalArgumentException("Unfathomed double");
+    }
+
 }
