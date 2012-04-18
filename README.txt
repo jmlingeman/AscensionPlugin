@@ -16,3 +16,5 @@ To do, copy the files from the libjogl folder to /Library/Java/Extensions.
 sudo cp -rf libjogl/* /Library/Java/Extensions/
 
 This is far from ideal, but it will work for now.
+
+Then just open up OpenSHAPA 1.11, and click Add Data on the Data Viewer. You should see Ascension Plugin as one of the options in the dropdown box. Select that, then select the example data included in the example_data/ directory to view it.
