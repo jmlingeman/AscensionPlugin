@@ -75,7 +75,7 @@ public class DataReader {
                     if(!sptLine[headerHash.get("Sensor" + String.valueOf(i) + ".X")].equals("")) {
                         x = Double.valueOf(sptLine[headerHash.get("Sensor" + String.valueOf(i) + ".X")]);
                         y = Double.valueOf(sptLine[headerHash.get("Sensor" + String.valueOf(i) + ".Y")]);
-                        z = -Double.valueOf(sptLine[headerHash.get("Sensor" + String.valueOf(i) + ".Z")]);
+                        z = Double.valueOf(sptLine[headerHash.get("Sensor" + String.valueOf(i) + ".Z")]);
                         pitch = Double.valueOf(sptLine[headerHash.get("Sensor" + String.valueOf(i) + ".Pitch")]);
                         yaw = Double.valueOf(sptLine[headerHash.get("Sensor" + String.valueOf(i) + ".yaw")]);
                         roll = Double.valueOf(sptLine[headerHash.get("Sensor" + String.valueOf(i) + ".Roll")]);
@@ -125,7 +125,7 @@ public class DataReader {
     }
     
     public static Body fixHemisphereFlips(Body body) {
-        double thresh = 3.0;
+        double thresh = 1.0;
         for(String key : body.markers.keySet()) {
             Marker marker = body.markers.get(key);
             for(int i = 1; i < marker.points.size(); i++) {

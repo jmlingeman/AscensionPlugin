@@ -84,7 +84,7 @@ public class Sketch extends PApplet {
                 if(curPoint.button == 1) {
                     fill(255,0,0);
                 }
-                translate((float)(curPoint.x / 1000.0) * width, (float)(curPoint.y / 1000.0) * height, (float)(curPoint.z / 1000.0));
+                translate((float)(curPoint.y * 1.5), (float)(curPoint.z * 1.5), (float)(curPoint.z * 1.5));
                 sphere(2);
 
                 popMatrix();
